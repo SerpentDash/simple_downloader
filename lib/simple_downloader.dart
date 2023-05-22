@@ -58,18 +58,14 @@ class SimpleDownloader {
 
   /// pause downloading file.
   Future<void> pause() async {
-    if (_callback.status == DownloadStatus.running) {
-      _callback.status = DownloadStatus.paused;
-      _subscription?.pause();
-    }
+    _callback.status = DownloadStatus.paused;
+    _subscription?.pause();
   }
 
   /// resume downloading file.
   Future<void> resume() async {
-    if (_callback.status == DownloadStatus.paused) {
-      _callback.status = DownloadStatus.resume;
-      _subscription?.resume();
-    }
+    _callback.status = DownloadStatus.resume;
+    _subscription?.resume();
   }
 
   /// cancel downloading file.
@@ -81,18 +77,12 @@ class SimpleDownloader {
   /// retry downloading file.
   /// this function can be run if status downloading file is failed or canceled.
   Future<void> retry() async {
-    if (_callback.status == DownloadStatus.failed ||
-        _callback.status == DownloadStatus.canceled) {
-      _subscription = await _method.start(resume: true);
-    }
+    _subscription = await _method.start(resume: true);
   }
 
   /// restart downloading file.
   Future<void> restart() async {
-    if (_callback.status == DownloadStatus.failed ||
-        _callback.status == DownloadStatus.canceled) {
-      download();
-    }
+    download();
   }
 
   /// try to open downloaded file.
